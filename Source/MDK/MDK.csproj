@@ -247,11 +247,8 @@
       <Name>MDKServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\MDKUtilities\MDKUtilities.csproj">
-      <Project>{5C6B59B5-82CB-4886-94A7-AD610F75B1A6}</Project>
+      <Project>{5c6b59b5-82cb-4886-94a7-ad610f75b1a6}</Project>
       <Name>MDKUtilities</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
     <ProjectReference Include="..\MDKWhitelistExtractor\MDKWhitelistExtractor.csproj">
       <Project>{02E93D45-C296-49F4-BEF2-3D5429549917}</Project>
@@ -421,16 +418,15 @@
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="..\Mixin.SteamAndSE\Mixin.SteamAndSE.projitems" Label="Shared" />
   <UsingTask TaskName="FindCsi" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
-	  <ParameterGroup>
-		  <CsiPath ParameterType="System.String" Output="true" />
-	  </ParameterGroup>
-	  <Task>
-		  <Using Namespace="System" />
-		  <Using Namespace="System.Diagnostics" />
-		  <Using Namespace="System.IO" />
-		  <Using Namespace="System.Linq" />
-		  <Code Type="Fragment" Language="cs">
-			  <![CDATA[
+    <ParameterGroup>
+      <CsiPath ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.Diagnostics" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Linq" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
         var programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
         var vsWherePath = Path.Combine(programFiles, @"Microsoft Visual Studio\Installer\vswhere.exe");
         var startInfo = new ProcessStartInfo(vsWherePath)
@@ -446,17 +442,15 @@
         process.WaitForExit();
         var roslynPath = Directory.GetDirectories(Path.Combine(vsInstallDir, @"MSBuild\Current\Bin"), "Roslyn", SearchOption.AllDirectories).FirstOrDefault();
         CsiPath = roslynPath != null ? Path.Combine(roslynPath, "csi.exe") : string.Empty;
-      ]]>
-		  </Code>
-	  </Task>
+      ]]></Code>
+    </Task>
   </UsingTask>
   <Target Name="BeforeBuild">
-	  <FindCsi>
-		  <Output TaskParameter="CsiPath" PropertyName="CsiExePath" />
-	  </FindCsi>
-	  <Exec Command="&quot;$(CsiExePath)&quot; &quot;MDKPackage.GeneratedInfo.csx&quot;" />
+    <FindCsi>
+      <Output TaskParameter="CsiPath" PropertyName="CsiExePath" />
+    </FindCsi>
+    <Exec Command="&quot;$(CsiExePath)&quot; &quot;MDKPackage.GeneratedInfo.csx&quot;" />
   </Target>
-
   <PropertyGroup>
     <PostBuildEvent>"$(ProjectDir)deploy.bat" $(ConfigurationName) "$(ProjectDir)..\..\Release" "$(TargetDir)$(TargetName).vsix"</PostBuildEvent>
   </PropertyGroup>

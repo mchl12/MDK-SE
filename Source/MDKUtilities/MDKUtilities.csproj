@@ -70,7 +70,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <Import Project="..\Mixin.MDKProjectProperties\Mixin.MDKProjectProperties.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\MDKServices\MDKServices.csproj">
+      <Project>{b76a0b75-34b1-4110-accd-6cea981fe0d6}</Project>
+      <Name>MDKServices</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\Mixin.SteamAndSE\Mixin.SteamAndSE.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
