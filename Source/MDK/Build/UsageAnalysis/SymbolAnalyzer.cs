@@ -14,7 +14,7 @@ namespace MDK.Build.UsageAnalysis
         static bool IsNotSpecialDefinitions(SymbolDefinitionInfo s)
         {
             return s.Symbol != null && !s.Symbol.IsOverride && !s.Symbol.IsInterfaceImplementation()
-                && !s.Symbol.GetAttributes().Any(attributeData => attributeData.AttributeClass?.GetFullName() == typeof(NoRenameAttribute).FullName);
+                && !s.Symbol.GetAttributes().Any(attributeData => attributeData.AttributeClass?.GetFullName() == "Malware.MDKUtilities.NoRenameAttribute");
         }
 
         public HashSet<string> ProtectedSymbols { get; } = new HashSet<string>
