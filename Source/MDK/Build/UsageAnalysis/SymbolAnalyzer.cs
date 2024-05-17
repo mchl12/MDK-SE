@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 using Malware.MDKServices;
+using Malware.MDKUtilities;
 using MDK.Build.Annotations;
 using MDK.Build.Solution;
 using Microsoft.CodeAnalysis;
@@ -12,7 +13,8 @@ namespace MDK.Build.UsageAnalysis
     {
         static bool IsNotSpecialDefinitions(SymbolDefinitionInfo s)
         {
-            return s.Symbol != null && !s.Symbol.IsOverride && !s.Symbol.IsInterfaceImplementation();
+            return s.Symbol != null && !s.Symbol.IsOverride && !s.Symbol.IsInterfaceImplementation()
+                && !s.Symbol.GetAttributes().Any(attributeData => attributeData.AttributeClass?.GetFullName() == typeof(NoRenameAttribute).FullName);
         }
 
         public HashSet<string> ProtectedSymbols { get; } = new HashSet<string>
